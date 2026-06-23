@@ -39,17 +39,27 @@ def calculate_rsi(conn,symbol,window):
     avg_gain = sum(gains[-window:]) / window
     avg_loss = sum(losses[-window:]) / window
     if avg_loss == 0:
-        return 100
+        return 100, "Overbought"  
     rs = avg_gain / avg_loss
     rsi = 100 - (100 / (1 + rs))
-    return rsi
+    if rsi > 70:
+        signal = "Overbought"
+    elif rsi < 30:
+        signal = "Oversold"
+    else:
+        signal = "Neutral"
+    return rsi, signal
 
 def get_summary(conn,symbol):
+    rsi, signal = calculate_rsi(conn, symbol, 14)
+    latest_row = db.latest_price(conn, symbol)
+    latest_price = latest_row[6]  
     return{
         "symbol" : symbol,
-        "latest price" : db.latest_price(conn,symbol),
+        "latest_price" : latest_price,
         "ema" : calculate_ema(conn,symbol,14),
         "sma" : calculate_sma(conn,symbol,14),
-        "rsi" : calculate_rsi(conn,symbol,14)
+        "rsi" : rsi,
+        "signal" : signal
 
     }
