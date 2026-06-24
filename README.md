@@ -3,7 +3,7 @@ In this project an API server has been made which can fetch and store the live s
 It can perform various stock related operations on the stock data, Data obtained is stored in POSTGRESQL using psycopg2 library
 FASTapi has been used and all the endpoints can be accessed using SWAGGERUI 
 ## Live URL 
-yet to be hosted 
+ingenious-dedication-production-ed26.up.railway.app/docs
 ## Endpoints 
 1. " POST /stock/{symbol}/fetch" : used to store the stock data in database downloaded from yfinance library
 2. "GET  /stock/{symbol}" : used to get all the data for a specific stock using stock symbol
